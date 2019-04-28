@@ -1125,13 +1125,20 @@ def rotate(origin, point, angle):
 
 
 ###############################################################################        
-def augment_training_data(label_folder, image_folder, hsv_range=[0.5,1.5],
+def augment_training_data(label_folder, image_folder, 
+                          label_folder_out='', image_folder_out='',
+                          hsv_range=[0.5,1.5],
                           skip_hsv_transform=True, ext='.jpg'):
     '''Rotate data to augment training sizeo 
     darknet c functions already to HSV transform, and left-right swap, so
     skip those transforms
     Image augmentation occurs in data.c load_data_detection()'''
     
+    if len(label_folder_out) == 0:
+        label_folder_out = label_folder
+    if len(image_folder_out) == 0:
+        image_folder_out = image_folder
+        
     hsv_diff = hsv_range[1] - hsv_range[0]
     im_l_out = []
     for label_file in os.listdir(label_folder):
@@ -1263,15 +1270,15 @@ def augment_training_data(label_folder, image_folder, hsv_range=[0.5,1.5],
         # flip vertically or rotate 180 randomly
         if bool(random.getrandbits(1)):
             # flip vertically 
-            imout_ud = os.path.join(image_folder, root + '_ud' + ext)
-            labout_ud = os.path.join(label_folder, root + '_ud.txt')
+            imout_ud = os.path.join(image_folder_out, root + '_ud' + ext)
+            labout_ud = os.path.join(label_folder_out, root + '_ud.txt')
             cv2.imwrite(imout_ud, image_ud)
             ud_out.to_csv(labout_ud, sep=' ', header=False)
             im_l_out.append(imout_ud)
         else:
-            im180_path = os.path.join(image_folder, root + '_rot180' + ext)
+            im180_path = os.path.join(image_folder_out, root + '_rot180' + ext)
             cv2.imwrite(os.path.join(im180_path), image_rot180)
-            rot_out180.to_csv(os.path.join(label_folder, root + '_rot180.txt'), sep=' ', header=False)
+            rot_out180.to_csv(os.path.join(label_folder_out, root + '_rot180.txt'), sep=' ', header=False)
             im_l_out.append(im180_path)
 
         
@@ -1291,17 +1298,17 @@ def augment_training_data(label_folder, image_folder, hsv_range=[0.5,1.5],
 
         # rotate 90 degrees or 270 randomly
         if bool(random.getrandbits(1)):
-            im90_path = os.path.join(image_folder, root + '_rot90' + ext)
+            im90_path = os.path.join(image_folder_out, root + '_rot90' + ext)
             #lab90 = label_folder + root + '_rot90.txt'
             cv2.imwrite(im90_path, image_rot90)
-            rot_out90.to_csv(os.path.join(label_folder, root + '_rot90.txt'), sep=' ', header=False)
+            rot_out90.to_csv(os.path.join(label_folder_out, root + '_rot90.txt'), sep=' ', header=False)
             im_l_out.append(im90_path)
             
         else:
             # rotate 270 degrees ()
-            im270_path = os.path.join(image_folder, root + '_rot270' + ext)
+            im270_path = os.path.join(image_folder_out, root + '_rot270' + ext)
             cv2.imwrite(im270_path, image_rot270)
-            rot_out270.to_csv(os.path.join(label_folder, root + '_rot270.txt'), sep=' ', header=False)
+            rot_out270.to_csv(os.path.join(label_folder_out, root + '_rot270.txt'), sep=' ', header=False)
             im_l_out.append(im270_path)
     
     return im_l_out
