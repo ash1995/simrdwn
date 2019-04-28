@@ -58,7 +58,7 @@ Training data needs to be transformed to the YOLO format of training images in a
 
     <object-class> <x> <y> <width> <height>
 
-Where x, y, width, and height are relative to the image's width and height.  Running a script such as _/simrdwn/core/parse\_cowc.py_ extracts training windows of reasonable size (usually 416 or 544 pixels in extent) from large labeleled images of the [COWC](https://gdo152.llnl.gov/cowc/) dataset.  The script then transforms the labels corresponding to these windows into the correct format and creates a list of all training input images in _/simdwn/data/training\_list.txt_.  Class integers are 0-indexex in YOLT, though they are 1-indexed in tensorflow; this can cause some confusion...
+Where x, y, width, and height are relative to the image's width and height.  Running a script such as _/simrdwn/core/parse\_cowc.py_ extracts training windows of reasonable size (usually 416 or 544 pixels in extent) from large labeleled images of the [COWC](https://gdo152.llnl.gov/cowc/) dataset.  The script then transforms the labels corresponding to these windows into the correct format and creates a list of all training input images in _/simdwn/data/training\_list.txt_.  Class integers are 0-indexed in YOLT, though they are 1-indexed in tensorflow; this can cause some confusion...
 
 We also need to define the object classes with a .pbtxt file, such as _/simrdwn/data/class\_labels\_car.pbtxt_
 
