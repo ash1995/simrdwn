@@ -18,7 +18,7 @@ im_ext = ['.jpg', '.tif', '.png']
 
 img_path = ROOT_DIR + os.sep + "images"
 
-img_files = [i for ind in os.walk(img_path) for i in ind[2] if i[-4:].lower() in im_ext]
+img_files = [i for ind in os.walk(img_path) for i in ind[2] if i[-4:].lower() in im_ext and i[0] != "."]
 
 
 
