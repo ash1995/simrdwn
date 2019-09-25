@@ -263,69 +263,6 @@ def get_img_info(img_dir, img_files):
     return iminfo
 
 
-# def gtif2jpg(src_dir_name,dest_dir_name,adapt_hist_eq=False):
-    
-#     """
-#     Converts the satellite images from geotif to jpg
-    
-#     """
-
-#     ROOT_DIR = os.getcwd()    
-#     os.mkdir(ROOT_DIR + os.sep + "{}".format(dest_dir_name))
-#     img_path = os.path.join(ROOT_DIR,src_dir_name)
-#     jpg_path = os.path.join(ROOT_DIR,dest_dir_name)
-#     img_dirs = [im[1] for im in os.walk(img_path)][0]
-    
-    
-#     for each_img_dir in img_dirs:
-#         os.mkdir(jpg_path + os.sep + each_img_dir)
-#         dir_path = os.path.join(jpg_path,each_img_dir)
-#         os.mkdir(dir_path + os.sep + "Pan-Sharpen")
-#         dest_path = os.path.join(dir_path, "Pan-Sharpen")
-#         print("Converting " + each_img_dir + " files")
-#         img_files = [i for ind in os.walk(os.path.join(img_path,each_img_dir,"Pan-Sharpen")) for i in ind[2] if bool(re.search('.aux.xml',i)) is False and bool(re.search('.tif',i)) is True]
-        
-#         for each_img in tqdm(img_files):
-#             dest = os.path.join(dest_path, each_img[:-4] +".jpg")
-#             src = os.path.join(img_path,each_img_dir, "Pan-Sharpen", each_img)
-
-#             raster = rasterio.open(src)
-
-#             # Normalize bands into 0.0 - 1.0 scale
-#             def normalize(array):
-#                 array_min, array_max = array.min(), array.max()
-#                 return ((array - array_min)/(array_max - array_min))
-
-#             # Convert to numpy arrays
-#             red = raster.read(3)
-#             green = raster.read(2)
-#             blue = raster.read(1)
-
-#             # Normalize band DN
-#             redn = normalize(red)
-#             greenn = normalize(green)
-#             bluen = normalize(blue)
-
-#             # Stack bands
-#             nrg = np.dstack(( redn, greenn, bluen))
-
-#             data = 255 * nrg # Now scale by 255
-#             img = data.astype(np.uint8)
-
-#             if adapt_hist_eq == False:
-#                 cv2.imwrite(dest, img)
-#             elif adapt_hist_eq == True:
-#                 img_adapteq = exposure.equalize_adapthist(img, clip_limit=0.02)
-#                 skimage.io.imsave(dest, img_adapteq)
-
-
-#             # gdal.Translate(destName=dest, 
-#             #                srcDS=src, 
-#             #                options=translate_options)
-
-
-#     print("Conversion Complete")
-
 
 def tifconv(src_dir_name,dest_dir_name,ext_choice='.jpg'):
 
